@@ -1,26 +1,23 @@
-const express=require('express')
-const mongoose=require('mongoose')
+const express = require('express');
+const mongoose = require('mongoose');
 
-const userRoutes = require('./routes/todoRoutes')
+// Routes
+const homeRoutes=require('./routes/homeRoutes');
+const todoRoutes = require('./routes/todoRoutes');
 
-// Defining the PORT
-const port=process.env.PORT || 3000;
-
-// Creating Express App
-const app=express();
-
-// Listen to requests
-app.listen(port,()=>{
-    console.log(`The server is running on ${port}`);
-});
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-mongoose.connect('mongodb://localhost:27017/todos-db');
-console.log('Db Connected');
 
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost/todo-list');
 
-app.use('/todos',userRoutes);
+// Routes Url
+app.use('/',homeRoutes);
+app.use('/todos', todoRoutes);
 
-app.use((req,res)=>{
-    res.status(404).send('Not Found');
-})
+// Starting the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

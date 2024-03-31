@@ -1,21 +1,19 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const schema=new mongoose.Schema({
-    title:{
+const todoSchema = new mongoose.Schema({
+  title: String,
+  status: {
+    type: String,
+    enum: ['pending', 'In Progress', 'Completed']
+  },
+   description:{
         type:String,
-        required:[true, 'Title Should be provided']
-    },
-    // description:{
-    //     type:String,
-    //     required:[true],
-    //     minLength:[5,'Minimum 5 characters'],
-    //     maxLength:[25,'Maximum 25 characters']
-    // },
-    Status:{
-        type:String,
+        required:[true],
+        minLength:[5,'Minimum 5 characters'],
+        maxLength:[25,'Maximum 25 characters']
     },
     createdDate:{type:Date},
     updatedDate:{type:Date,default:Date.now}
 });
 
-module.exports=mongoose.model('user',schema);
+module.exports = mongoose.model('Todo', todoSchema);
